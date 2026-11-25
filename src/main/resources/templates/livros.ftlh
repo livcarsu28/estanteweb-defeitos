@@ -19,7 +19,7 @@
     <tr><th>Título</th><th>Autor</th><th>Ano</th><th>Preço</th></tr>
     <#list livros as livro>
         <tr>
-            <td><a href="/livros/${livro.id}">${livro.titulo}</a></td>
+            <td><a href="/livros/${livro.id?c}">${livro.titulo}</a></td>
             <td>${livro.autor}</td>
             <td>${livro.ano?c}</td>
             <td>R$ ${livro.preco?string("0.00")}</td>
