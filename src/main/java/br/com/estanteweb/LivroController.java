@@ -75,16 +75,21 @@ public String exibir(@PathVariable Long id, Model model) {
     }
 
     @GetMapping("/livros/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Livro livro = repositorio.buscarPorId(id);
+public String editar(@PathVariable Long id, HttpSession session, Model model) {
 
-        if (livro == null) {
-            return "redirect:/livros/html";
-        }
-
-        model.addAttribute("livro", livro);
-        return "livro-editar";
+    if (session.getAttribute("usuarioLogado") == null) {
+        return "redirect:/login";
     }
+
+    Livro livro = repositorio.buscarPorId(id);
+
+    if (livro == null) {
+        return "redirect:/livros/html";
+    }
+
+    model.addAttribute("livro", livro);
+    return "livro-editar";
+}
 
     @PostMapping("/livros/{id}")
     public String alterar(@PathVariable Long id, @RequestParam String titulo,
