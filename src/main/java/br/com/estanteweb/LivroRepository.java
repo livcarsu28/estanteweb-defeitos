@@ -49,10 +49,10 @@ public class LivroRepository {
     }
 
     public void atualizar(Livro livro) {
-        String sql = "UPDATE livro SET titulo = ?, autor = ?, ano = ?, preco = ?";
-        jdbcTemplate.update(sql,
-            livro.getTitulo(), livro.getAutor(), livro.getAno(), livro.getPreco());
-    }
+    String sql = "UPDATE livro SET titulo = ?, autor = ?, ano = ?, preco = ? WHERE id = ?";
+    jdbcTemplate.update(sql,
+        livro.getTitulo(), livro.getAutor(), livro.getAno(), livro.getPreco(), livro.getId());
+}
 
     public void excluir(Long id) {
         String sql = "DELETE FROM livro WHERE id = ?";
