@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -28,11 +30,17 @@ public class LivroController {
     }
 
     @GetMapping("/livros/{id}")
-    public String exibir(@PathVariable Long id, Model model) {
-        Livro livro = repositorio.buscarPorId(id);
-        model.addAttribute("livro", livro);
-        return "livro";
+public String exibir(@PathVariable Long id, Model model) {
+    Livro livro = repositorio.buscarPorId(id);
+
+    if (livro == null) {
+        throw new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Livro não encontrado");
     }
+
+    model.addAttribute("livro", livro);
+    return "livro";
+}
 
         @GetMapping("/livros/novo")
         public String novo(HttpSession session, Model model) {
